@@ -33,6 +33,8 @@ export async function POST(request: NextRequest) {
             const session: Stripe.Checkout.Session = event.data.object;
             const userId = session.metadata?.user_id;
 
+            console.log("Checkout session completed before CUUUNT:", session);
+
             // Create or update the stripe_customer_id in the stripe_customers table in supabase
             const { error } = await supabaseAdmin
                 .from("stripe_customers")
@@ -43,6 +45,8 @@ export async function POST(request: NextRequest) {
                     plan_active: true,
                     plan_expires: null,
                 });
+
+            console.log("Checkout session completed AFTER CUUUNT:", session);
 
             if (error) {
                 console.error("Supabase upsert error:", error);
