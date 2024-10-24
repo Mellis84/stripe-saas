@@ -17,6 +17,8 @@ export default function UserProfile() {
             setUser(user);
 
             if (user) {
+                console.log(user.id, "here");
+
                 const { data: stripeCustomerData, error } = await supabase
                     .from("stripe_customers")
                     .select("*")
